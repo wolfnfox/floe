@@ -11,11 +11,10 @@ builder.Services.Configure<FloeOptions>(
 
 builder.AddServiceDefaults();
 
-// N.B.: Example record and JsonSerializerContext for source generation
-//builder.Services.ConfigureHttpJsonOptions(options =>
-//{
-//    options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default);
-//});
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default);
+});
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -32,7 +31,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // Base endpoint
-app.MapGet("/v2/", () => Results.Ok(new { }))
+app.MapGet("/v2/", () => Results.Ok(new OK()))
     .Produces(200)
     .WithName("ApiVersionCheck");
 
@@ -43,10 +42,10 @@ app.Run();
 
 // N.B.: Example record and JsonSerializerContext for source generation
 
-//public record Todo(int Id, string? Title, DateOnly? DueBy = null, bool IsComplete = false);
+public record OK();
 
-//[JsonSerializable(typeof(Todo[]))]
-//internal partial class AppJsonSerializerContext : JsonSerializerContext
-//{
+[JsonSerializable(typeof(OK))]
+internal partial class AppJsonSerializerContext : JsonSerializerContext
+{
 
-//}
+}

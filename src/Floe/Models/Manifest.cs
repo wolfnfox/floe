@@ -4,6 +4,6 @@ public record Manifest(
     string Digest,
     string MediaType,
     long Size,
-    byte[] Content,
+    string Content,
     DateTimeOffset CreatedAt
 );

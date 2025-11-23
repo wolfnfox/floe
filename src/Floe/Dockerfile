@@ -1,5 +1,6 @@
 # See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
+ARG APP_UID=1000
 # These ARGs allow for swapping out the base used to make the final image when debugging from VS
 ARG LAUNCHING_FROM_VS
 # This sets the base image for final, but only if LAUNCHING_FROM_VS has been defined
@@ -11,7 +12,6 @@ USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
 
-
 # This stage is used to build the service project
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 # Install clang/zlib1g-dev dependencies for publishing to native
@@ -21,6 +21,7 @@ RUN apt-get update \
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Floe/Floe.csproj", "Floe/"]
+COPY ["Floe.ServiceDefaults/Floe.ServiceDefaults.csproj", "Floe.ServiceDefaults/"]
 RUN dotnet restore "./Floe/Floe.csproj"
 COPY . .
 WORKDIR "/src/Floe"
@@ -45,4 +46,4 @@ FROM ${FINAL_BASE_IMAGE:-mcr.microsoft.com/dotnet/runtime-deps:10.0} AS final
 WORKDIR /app
 EXPOSE 8080
 COPY --from=publish /app/publish .
-ENTRYPOINT ["./Floe"]
+ENTRYPOINT ["./floe"]

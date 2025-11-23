@@ -1,6 +1,5 @@
 using Floe.Configuration;
-using Microsoft.AspNetCore.Http.HttpResults;
-using System.IO;
+using Floe.Models.Oci;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateSlimBuilder(args);
@@ -31,20 +30,28 @@ if (app.Environment.IsDevelopment())
 }
 
 // Base endpoint
-app.MapGet("/v2/", () => Results.Ok(new OK()))
-    .Produces(200)
-    .WithName("ApiVersionCheck");
+app.MapGet("/v2/", (HttpContext ctx) =>
+{
+    ctx.Response.Headers["Docker-Distribution-API-Version"] = "registry/2.0";
+    return Results.Ok(new OK());
+})
+.Produces(200)
+.WithName("ApiVersionCheck");
 
 // TODO: Add other endpoint groups
 
 app.Run();
 
-
-// N.B.: Example record and JsonSerializerContext for source generation
-
+// TODO: Potentially move to a separate file
 public record OK();
 
 [JsonSerializable(typeof(OK))]
+[JsonSerializable(typeof(OciDescriptor))]
+[JsonSerializable(typeof(OciError))]
+[JsonSerializable(typeof(OciErrorResponse))]
+[JsonSerializable(typeof(OciImageIndex))]
+[JsonSerializable(typeof(OciManifest))]
+[JsonSerializable(typeof(OciPlatform))]
 internal partial class AppJsonSerializerContext : JsonSerializerContext
 {
 

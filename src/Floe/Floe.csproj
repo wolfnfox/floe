@@ -7,6 +7,9 @@
     <InvariantGlobalization>true</InvariantGlobalization>
     <PublishAot>true</PublishAot>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	<DockerfileContext>./src</DockerfileContext>
+	<DockerfilePath>./src/Floe/Dockerfile</DockerfilePath>
+	<AssemblyName>floe</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

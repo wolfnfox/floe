@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="src/Floe.AppHost/Floe.AppHost.csproj" />
+  <Project Path="src/Floe.ServiceDefaults/Floe.ServiceDefaults.csproj" />
+  <Project Path="src/Floe/Floe.csproj" />
+  <Project Path="tests/Floe.Tests/Floe.Tests.csproj" Id="fa7479a1-f55d-483a-a525-0d6229b0557b" />
+</Solution>

@@ -1,0 +1,6 @@
+@Floe_HostAddress = http://localhost:5272
+
+GET {{Floe_HostAddress}}/v2/
+Accept: application/json
+
+###
